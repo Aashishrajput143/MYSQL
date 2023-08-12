@@ -1,0 +1,1911 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 14
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use 3to430;
+Database changed
+mysql> create table emp(empid int primary key,empname varchar(10),empsal float);
+Query OK, 0 rows affected (0.69 sec)
+
+mysql> desc emp;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| empid   | int         | NO   | PRI | NULL    |       |
+| empname | varchar(10) | YES  |     | NULL    |       |
+| empsal  | float       | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.12 sec)
+
+mysql> show tables;
++------------------+
+| Tables_in_3to430 |
++------------------+
+| emp              |
++------------------+
+1 row in set (0.11 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| 3to4               |
+| 3to430             |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.07 sec)
+
+mysql> insert into emp values(105,'sonu',20000);
+Query OK, 1 row affected (0.28 sec)
+
+mysql> insert into emp values(105,'monu',25000);
+ERROR 1062 (23000): Duplicate entry '105' for key 'emp.PRIMARY'
+mysql> insert into emp values(102,'monu',25000);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into emp values(40000,201,'chintu');
+ERROR 1265 (01000): Data truncated for column 'empsal' at row 1
+mysql> insert into emp values('chintu',20000,106);
+ERROR 1366 (HY000): Incorrect integer value: 'chintu' for column 'empid' at row 1
+mysql> insert into emp(empsal,empid,empname) values(27000,104,'chintu');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into emp values(202,'ajay');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into emp(empid,empnam) values(202,'ajay');
+ERROR 1054 (42S22): Unknown column 'empnam' in 'field list'
+mysql> insert into emp(empid,empname) values(202,'ajay');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> desc emp;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| empid   | int         | NO   | PRI | NULL    |       |
+| empname | varchar(10) | YES  |     | NULL    |       |
+| empsal  | float       | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.06 sec)
+
+mysql> show emp;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'emp' at line 1
+mysql> select empsal from emp;
++--------+
+| empsal |
++--------+
+|  25000 |
+|  27000 |
+|  20000 |
+|   NULL |
++--------+
+4 rows in set (0.00 sec)
+
+mysql> select empsal,empname from emp;
++--------+---------+
+| empsal | empname |
++--------+---------+
+|  25000 | monu    |
+|  27000 | chintu  |
+|  20000 | sonu    |
+|   NULL | ajay    |
++--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select empname,empsal from emp;
++---------+--------+
+| empname | empsal |
++---------+--------+
+| monu    |  25000 |
+| chintu  |  27000 |
+| sonu    |  20000 |
+| ajay    |   NULL |
++---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select empname,empsal,empid from emp;
++---------+--------+-------+
+| empname | empsal | empid |
++---------+--------+-------+
+| monu    |  25000 |   102 |
+| chintu  |  27000 |   104 |
+| sonu    |  20000 |   105 |
+| ajay    |   NULL |   202 |
++---------+--------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   102 | monu    |  25000 |
+|   104 | chintu  |  27000 |
+|   105 | sonu    |  20000 |
+|   202 | ajay    |   NULL |
++-------+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from emp where empsal>20000;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   102 | monu    |  25000 |
+|   104 | chintu  |  27000 |
++-------+---------+--------+
+2 rows in set (0.02 sec)
+
+mysql> select * from emp where empsal>=20000 and empsal<=25000;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   102 | monu    |  25000 |
+|   105 | sonu    |  20000 |
++-------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   102 | monu    |  25000 |
+|   104 | chintu  |  27000 |
+|   105 | sonu    |  20000 |
+|   202 | ajay    |   NULL |
++-------+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> insert into emp values(103,'vijay',30000);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   102 | monu    |  25000 |
+|   103 | vijay   |  30000 |
+|   104 | chintu  |  27000 |
+|   105 | sonu    |  20000 |
+|   202 | ajay    |   NULL |
++-------+---------+--------+
+5 rows in set (0.03 sec)
+
+mysql> alter table emp drop primary key;
+Query OK, 5 rows affected (2.06 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   102 | monu    |  25000 |
+|   103 | vijay   |  30000 |
+|   104 | chintu  |  27000 |
+|   105 | sonu    |  20000 |
+|   202 | ajay    |   NULL |
++-------+---------+--------+
+5 rows in set (0.00 sec)
+
+mysql> insert into emp values(101,'virat',60000);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   102 | monu    |  25000 |
+|   103 | vijay   |  30000 |
+|   104 | chintu  |  27000 |
+|   105 | sonu    |  20000 |
+|   202 | ajay    |   NULL |
+|   101 | virat   |  60000 |
++-------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> insert into emp values(103,'vijay',30000);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   102 | monu    |  25000 |
+|   103 | vijay   |  30000 |
+|   104 | chintu  |  27000 |
+|   105 | sonu    |  20000 |
+|   202 | ajay    |   NULL |
+|   101 | virat   |  60000 |
+|   103 | vijay   |  30000 |
++-------+---------+--------+
+7 rows in set (0.00 sec)
+
+mysql> alter table emp add primary key(empid);
+ERROR 1062 (23000): Duplicate entry '103' for key 'emp.PRIMARY'
+mysql> alter table emp drop primary key;
+ERROR 1091 (42000): Can't DROP 'PRIMARY'; check that column/key exists
+mysql> delete from emp where empid=103;
+Query OK, 2 rows affected (0.10 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   102 | monu    |  25000 |
+|   104 | chintu  |  27000 |
+|   105 | sonu    |  20000 |
+|   202 | ajay    |   NULL |
+|   101 | virat   |  60000 |
++-------+---------+--------+
+5 rows in set (0.01 sec)
+
+mysql> alter table emp add primary key(empid);
+Query OK, 0 rows affected (1.73 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  60000 |
+|   102 | monu    |  25000 |
+|   104 | chintu  |  27000 |
+|   105 | sonu    |  20000 |
+|   202 | ajay    |   NULL |
++-------+---------+--------+
+5 rows in set (0.00 sec)
+
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  60000 |
+|   102 | monu    |  25000 |
+|   104 | chintu  |  27000 |
+|   105 | sonu    |  20000 |
+|   202 | ajay    |   NULL |
+|   300 | raina   |   NULL |
++-------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from emp order by empsal asc;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   202 | ajay    |   NULL |
+|   300 | raina   |   NULL |
+|   105 | sonu    |  20000 |
+|   102 | monu    |  25000 |
+|   104 | chintu  |  27000 |
+|   101 | virat   |  60000 |
++-------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from emp order by empsal asc empid asc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'empid asc' at line 1
+mysql> select * from emp order by empsal asc,empid asc;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   202 | ajay    |   NULL |
+|   300 | raina   |   NULL |
+|   105 | sonu    |  20000 |
+|   102 | monu    |  25000 |
+|   104 | chintu  |  27000 |
+|   101 | virat   |  60000 |
++-------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from emp order by empsal asc,empid desc;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   300 | raina   |   NULL |
+|   202 | ajay    |   NULL |
+|   105 | sonu    |  20000 |
+|   102 | monu    |  25000 |
+|   104 | chintu  |  27000 |
+|   101 | virat   |  60000 |
++-------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from emp order by empsal desc;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  60000 |
+|   104 | chintu  |  27000 |
+|   102 | monu    |  25000 |
+|   105 | sonu    |  20000 |
+|   202 | ajay    |   NULL |
+|   300 | raina   |   NULL |
++-------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from emp order by empsal;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   202 | ajay    |   NULL |
+|   300 | raina   |   NULL |
+|   105 | sonu    |  20000 |
+|   102 | monu    |  25000 |
+|   104 | chintu  |  27000 |
+|   101 | virat   |  60000 |
++-------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from emp where empsal>=25000;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  60000 |
+|   102 | monu    |  25000 |
+|   104 | chintu  |  27000 |
++-------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp where empsal=25000;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   102 | monu    |  25000 |
++-------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from emp where empsal=NULL;
+Empty set (0.00 sec)
+
+mysql> select * from emp where empsal='NULL';
+Empty set, 1 warning (0.00 sec)
+
+mysql> select * from emp where empsal is NULL;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   202 | ajay    |   NULL |
+|   300 | raina   |   NULL |
++-------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from emp where empsal is null;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   202 | ajay    |   NULL |
+|   300 | raina   |   NULL |
++-------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from emp where empsal is not null;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  60000 |
+|   102 | monu    |  25000 |
+|   104 | chintu  |  27000 |
+|   105 | sonu    |  20000 |
++-------+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  60000 |
+|   102 | monu    |  25000 |
+|   104 | chintu  |  27000 |
+|   105 | sonu    |  20000 |
+|   202 | ajay    |   NULL |
+|   300 | raina   |   NULL |
++-------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> update emp set empsal=15000 where empsal is null;
+Query OK, 2 rows affected (0.05 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  60000 |
+|   102 | monu    |  25000 |
+|   104 | chintu  |  27000 |
+|   105 | sonu    |  20000 |
+|   202 | ajay    |  15000 |
+|   300 | raina   |  15000 |
++-------+---------+--------+
+6 rows in set (0.01 sec)
+
+mysql> update emp set empsal=10000 where empid=300;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  60000 |
+|   102 | monu    |  25000 |
+|   104 | chintu  |  27000 |
+|   105 | sonu    |  20000 |
+|   202 | ajay    |  15000 |
+|   300 | raina   |  10000 |
++-------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> update emp set empsal=empsal+(empsal*10/100);
+Query OK, 6 rows affected (0.08 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   202 | ajay    |  16500 |
+|   300 | raina   |  11000 |
++-------+---------+--------+
+6 rows in set (0.01 sec)
+
+mysql> update emp set empid=207 where empid=300;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   202 | ajay    |  16500 |
+|   207 | raina   |  11000 |
++-------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> update emp set (empsal=80000 where empid=101),(empsal=40000 where empid=202);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(empsal=80000 where empid=101),(empsal=40000 where empid=202)' at line 1
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   202 | ajay    |  16500 |
+|   207 | raina   |  11000 |
++-------+---------+--------+
+6 rows in set (0.03 sec)
+
+mysql> update emp set empname='dhoni',empsal=95000 where empid=207;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   202 | ajay    |  16500 |
+|   207 | dhoni   |  95000 |
++-------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from emp where empsal>=20000 and empsal<=50000;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
++-------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp where empsal between 20000 and 50000;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
++-------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   202 | ajay    |  16500 |
+|   207 | dhoni   |  95000 |
++-------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from emp where empname='sonu' or empname='monu' or empname='sachin';
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   102 | monu    |  27500 |
+|   105 | sonu    |  22000 |
++-------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from emp where empname in ('sonu','monu','sachin');
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   102 | monu    |  27500 |
+|   105 | sonu    |  22000 |
++-------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from emp where empname='sachin';
+Empty set (0.00 sec)
+
+mysql> select * from emp where empnam='sachin';
+ERROR 1054 (42S22): Unknown column 'empnam' in 'where clause'
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   202 | ajay    |  16500 |
+|   207 | dhoni   |  95000 |
++-------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from emp where empname like '%u';
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
++-------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp where empname like '____';
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   102 | monu    |  27500 |
+|   105 | sonu    |  22000 |
+|   202 | ajay    |  16500 |
++-------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   202 | ajay    |  16500 |
+|   207 | dhoni   |  95000 |
++-------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from emp where empname like 'c%';
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   104 | chintu  |  29700 |
++-------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   202 | ajay    |  16500 |
+|   207 | dhoni   |  95000 |
++-------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from emp where empname like '%i%;
+    '> ;
+    '> ';
+Empty set (0.00 sec)
+
+mysql> select * from emp where empname like '%i%';
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   104 | chintu  |  29700 |
+|   207 | dhoni   |  95000 |
++-------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp where empname='sonu' or empname='monu' or empname='sachin';
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   102 | monu    |  27500 |
+|   105 | sonu    |  22000 |
++-------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from emp where empname='sonu'
+    ->
+    ->
+    -> ;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   105 | sonu    |  22000 |
++-------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from emp where empname='sonu'
+    -> or empname='monu'
+    -> or empname='chintu';
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
++-------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp where empname not like 'c%';
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   105 | sonu    |  22000 |
+|   202 | ajay    |  16500 |
+|   207 | dhoni   |  95000 |
++-------+---------+--------+
+5 rows in set (0.02 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   202 | ajay    |  16500 |
+|   207 | dhoni   |  95000 |
++-------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from emp order by empsal;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   202 | ajay    |  16500 |
+|   105 | sonu    |  22000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   101 | virat   |  66000 |
+|   207 | dhoni   |  95000 |
++-------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from emp order by empsal desc;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   207 | dhoni   |  95000 |
+|   101 | virat   |  66000 |
+|   104 | chintu  |  29700 |
+|   102 | monu    |  27500 |
+|   105 | sonu    |  22000 |
+|   202 | ajay    |  16500 |
++-------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from emp order by empsal desc limit 3;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   207 | dhoni   |  95000 |
+|   101 | virat   |  66000 |
+|   104 | chintu  |  29700 |
++-------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp limit 3;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
++-------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp order by empsal desc limit 1,3;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   104 | chintu  |  29700 |
+|   102 | monu    |  27500 |
++-------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp order by empsal desc limit 1,1;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
++-------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from emp order by empsal desc limit 2,1;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   104 | chintu  |  29700 |
++-------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   202 | ajay    |  16500 |
+|   207 | dhoni   |  95000 |
++-------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> delete from emp where empid=202;
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   207 | dhoni   |  95000 |
++-------+---------+--------+
+5 rows in set (0.04 sec)
+
+mysql> delete from emp where empid=202;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   207 | dhoni   |  95000 |
++-------+---------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select empname from emp;
++---------+
+| empname |
++---------+
+| virat   |
+| monu    |
+| chintu  |
+| sonu    |
+| dhoni   |
++---------+
+5 rows in set (0.00 sec)
+
+mysql> select empname as emp_name from emp;
++----------+
+| emp_name |
++----------+
+| virat    |
+| monu     |
+| chintu   |
+| sonu     |
+| dhoni    |
++----------+
+5 rows in set (0.00 sec)
+
+mysql> select empname as emp_name,empid as id from emp;
++----------+-----+
+| emp_name | id  |
++----------+-----+
+| virat    | 101 |
+| monu     | 102 |
+| chintu   | 104 |
+| sonu     | 105 |
+| dhoni    | 207 |
++----------+-----+
+5 rows in set (0.00 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   207 | dhoni   |  95000 |
++-------+---------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select sum(empsal) from emp;
++-------------+
+| sum(empsal) |
++-------------+
+|      240200 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> select sum(empsal) as Total Sal from emp;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Sal from emp' at line 1
+mysql> select sum(empsal) as Total_Sal from emp;
++-----------+
+| Total_Sal |
++-----------+
+|    240200 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select avg(empsal) from emp;
++-------------+
+| avg(empsal) |
++-------------+
+|       48040 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select count(empsal) from emp;
++---------------+
+| count(empsal) |
++---------------+
+|             5 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select min(empsal) from emp;
++-------------+
+| min(empsal) |
++-------------+
+|       22000 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> select max(empsal) from emp;
++-------------+
+| max(empsal) |
++-------------+
+|       95000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select max(empsal),min(empsal),avg(empsal),count(empsal) from emp;
++-------------+-------------+-------------+---------------+
+| max(empsal) | min(empsal) | avg(empsal) | count(empsal) |
++-------------+-------------+-------------+---------------+
+|       95000 |       22000 |       48040 |             5 |
++-------------+-------------+-------------+---------------+
+1 row in set (0.00 sec)
+
+mysql> select max(empsal),min(empsal),avg(empsal),count(empsal),sum(empsal) from emp;
++-------------+-------------+-------------+---------------+-------------+
+| max(empsal) | min(empsal) | avg(empsal) | count(empsal) | sum(empsal) |
++-------------+-------------+-------------+---------------+-------------+
+|       95000 |       22000 |       48040 |             5 |      240200 |
++-------------+-------------+-------------+---------------+-------------+
+1 row in set (0.00 sec)
+
+mysql> select upper(empname) from emp;
++----------------+
+| upper(empname) |
++----------------+
+| VIRAT          |
+| MONU           |
+| CHINTU         |
+| SONU           |
+| DHONI          |
++----------------+
+5 rows in set (0.02 sec)
+
+mysql> select char_length(empname) from emp;
++----------------------+
+| char_length(empname) |
++----------------------+
+|                    5 |
+|                    4 |
+|                    6 |
+|                    4 |
+|                    5 |
++----------------------+
+5 rows in set (0.01 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   207 | dhoni   |  95000 |
++-------+---------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select concat(empid,empsal) from emp;
++----------------------+
+| concat(empid,empsal) |
++----------------------+
+| 10166000             |
+| 10227500             |
+| 10429700             |
+| 10522000             |
+| 20795000             |
++----------------------+
+5 rows in set (0.00 sec)
+
+mysql> select concat(empid,'_',empsal) from emp;
++--------------------------+
+| concat(empid,'_',empsal) |
++--------------------------+
+| 101_66000                |
+| 102_27500                |
+| 104_29700                |
+| 105_22000                |
+| 207_95000                |
++--------------------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   207 | dhoni   |  95000 |
++-------+---------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   207 | dhoni   |  95000 |
++-------+---------+--------+
+5 rows in set (0.00 sec)
+
+mysql> transaction;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'transaction' at line 1
+mysql> transaction
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'transaction' at line 1
+mysql> start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> savepoint sp1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delete from emp where empsal>80000;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
++-------+---------+--------+
+4 rows in set (0.01 sec)
+
+mysql> rollback to savepoint sp1;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   207 | dhoni   |  95000 |
++-------+---------+--------+
+5 rows in set (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   207 | dhoni   |  95000 |
++-------+---------+--------+
+5 rows in set (0.00 sec)
+
+mysql> alter table emp change empid empid int auto_increment primary key;
+ERROR 1068 (42000): Multiple primary key defined
+mysql> alter table emp change empid empid int auto_increment;
+Query OK, 5 rows affected (2.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> insert into emp(empname,empsal) values('sachin',60000);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   207 | dhoni   |  95000 |
+|   208 | sachin  |  60000 |
++-------+---------+--------+
+6 rows in set (0.01 sec)
+
+mysql> insert into emp(empname,empsal) values('ganguli',50000);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   207 | dhoni   |  95000 |
+|   208 | sachin  |  60000 |
+|   209 | ganguli |  50000 |
++-------+---------+--------+
+7 rows in set (0.00 sec)
+
+mysql> alter table emp auto_increment=500;
+Query OK, 0 rows affected (0.60 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into emp(empname,empsal) values('rahul',50000);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   207 | dhoni   |  95000 |
+|   208 | sachin  |  60000 |
+|   209 | ganguli |  50000 |
+|   500 | rahul   |  50000 |
++-------+---------+--------+
+8 rows in set (0.00 sec)
+
+mysql> insert into emp values(103,'pant',50000);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   103 | pant    |  50000 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   207 | dhoni   |  95000 |
+|   208 | sachin  |  60000 |
+|   209 | ganguli |  50000 |
+|   500 | rahul   |  50000 |
++-------+---------+--------+
+9 rows in set (0.01 sec)
+
+mysql> insert into emp(empname,empsal) values('rahul',50000);
+Query OK, 1 row affected (0.19 sec)
+
+mysql> select * from emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   103 | pant    |  50000 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   207 | dhoni   |  95000 |
+|   208 | sachin  |  60000 |
+|   209 | ganguli |  50000 |
+|   500 | rahul   |  50000 |
+|   501 | rahul   |  50000 |
++-------+---------+--------+
+10 rows in set (0.00 sec)
+
+mysql> alter table emp add check(empsal>=20000);
+Query OK, 10 rows affected (2.41 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> insert into emp(empname,empsal) values('rahul',20000);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into emp(empname,empsal) values('rahul',19000);
+ERROR 3819 (HY000): Check constraint 'emp_chk_1' is violated.
+mysql> alter table emp rename to emps;
+Query OK, 0 rows affected (0.34 sec)
+
+mysql> select * from emp;
+ERROR 1146 (42S02): Table '3to430.emp' doesn't exist
+mysql> select * from emps;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   103 | pant    |  50000 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   207 | dhoni   |  95000 |
+|   208 | sachin  |  60000 |
+|   209 | ganguli |  50000 |
+|   500 | rahul   |  50000 |
+|   501 | rahul   |  50000 |
+|   502 | rahul   |  20000 |
++-------+---------+--------+
+11 rows in set (0.09 sec)
+
+mysql> alter table emps alter empsal set default 30000;
+Query OK, 0 rows affected (0.37 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into emp(empname,empsal) values('ajay',25000);
+ERROR 1146 (42S02): Table '3to430.emp' doesn't exist
+mysql> insert into emps(empname,empsal) values('ajay',25000);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into emps(empname) values('vijay');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> select * from emps;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   103 | pant    |  50000 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   207 | dhoni   |  95000 |
+|   208 | sachin  |  60000 |
+|   209 | ganguli |  50000 |
+|   500 | rahul   |  50000 |
+|   501 | rahul   |  50000 |
+|   502 | rahul   |  20000 |
+|   503 | ajay    |  25000 |
+|   504 | vijay   |  30000 |
++-------+---------+--------+
+13 rows in set (0.00 sec)
+
+mysql> create table event(roll int,name text,activity text,primary key(roll,activity));
+ERROR 1170 (42000): BLOB/TEXT column 'activity' used in key specification without a key length
+mysql> create table event(roll int,name text(10),activity text(10),primary key(roll,activity));
+ERROR 1170 (42000): BLOB/TEXT column 'activity' used in key specification without a key length
+mysql> create table event(roll int,name varchar(10),activity varchar(10),primary key(roll,activity));
+Query OK, 0 rows affected (1.00 sec)
+
+mysql> insert into event values(101,'a','dance');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into event values(102,'b','dance');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into event values(101,'a','mimcry');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into event values(102,'c','dance');
+ERROR 1062 (23000): Duplicate entry '102-dance' for key 'event.PRIMARY'
+mysql> create table bank(mydate date,mytime time,mydt datetime);
+Query OK, 0 rows affected (0.82 sec)
+
+mysql> insert into bank values('2015-10-20','10:12:13','2022-12-12 5:6:7');
+Query OK, 1 row affected (0.14 sec)
+
+mysql> select * from bank;
++------------+----------+---------------------+
+| mydate     | mytime   | mydt                |
++------------+----------+---------------------+
+| 2015-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
++------------+----------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> insert into bank values('2016/10/20','10:12:13','2022-12-12 5:6:7');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> select * from bank;
++------------+----------+---------------------+
+| mydate     | mytime   | mydt                |
++------------+----------+---------------------+
+| 2015-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 2016-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
++------------+----------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into bank values(19991218,101112,19991218101112);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from bank;
++------------+----------+---------------------+
+| mydate     | mytime   | mydt                |
++------------+----------+---------------------+
+| 2015-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 2016-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 1999-12-18 | 10:11:12 | 1999-12-18 10:11:12 |
++------------+----------+---------------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into bank values('10-10-20','10:12:13','2022-12-12 5:6:7');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> select * from bank;
++------------+----------+---------------------+
+| mydate     | mytime   | mydt                |
++------------+----------+---------------------+
+| 2015-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 2016-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 1999-12-18 | 10:11:12 | 1999-12-18 10:11:12 |
+| 2010-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
++------------+----------+---------------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into bank values('80-10-20','10:12:13','2022-12-12 5:6:7');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> select * from bank;
++------------+----------+---------------------+
+| mydate     | mytime   | mydt                |
++------------+----------+---------------------+
+| 2015-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 2016-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 1999-12-18 | 10:11:12 | 1999-12-18 10:11:12 |
+| 2010-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 1980-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
++------------+----------+---------------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into bank values('70-10-20','10:12:13','2022-12-12 5:6:7');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> select * from bank;
++------------+----------+---------------------+
+| mydate     | mytime   | mydt                |
++------------+----------+---------------------+
+| 2015-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 2016-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 1999-12-18 | 10:11:12 | 1999-12-18 10:11:12 |
+| 2010-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 1980-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 1970-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
++------------+----------+---------------------+
+6 rows in set (0.00 sec)
+
+mysql> insert into bank values('69-10-20','10:12:13','2022-12-12 5:6:7');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from bank;
++------------+----------+---------------------+
+| mydate     | mytime   | mydt                |
++------------+----------+---------------------+
+| 2015-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 2016-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 1999-12-18 | 10:11:12 | 1999-12-18 10:11:12 |
+| 2010-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 1980-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 1970-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 2069-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
++------------+----------+---------------------+
+7 rows in set (0.00 sec)
+
+mysql> insert into bank values(curdate(),curtime(),now());
+Query OK, 1 row affected (0.10 sec)
+
+mysql> select * from bank;
++------------+----------+---------------------+
+| mydate     | mytime   | mydt                |
++------------+----------+---------------------+
+| 2015-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 2016-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 1999-12-18 | 10:11:12 | 1999-12-18 10:11:12 |
+| 2010-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 1980-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 1970-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 2069-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 2022-03-29 | 16:01:02 | 2022-03-29 16:01:02 |
++------------+----------+---------------------+
+8 rows in set (0.01 sec)
+
+mysql> insert into bank values(curdate(),curtime(),now());
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from bank;
++------------+----------+---------------------+
+| mydate     | mytime   | mydt                |
++------------+----------+---------------------+
+| 2015-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 2016-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 1999-12-18 | 10:11:12 | 1999-12-18 10:11:12 |
+| 2010-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 1980-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 1970-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 2069-10-20 | 10:12:13 | 2022-12-12 05:06:07 |
+| 2022-03-29 | 16:01:02 | 2022-03-29 16:01:02 |
+| 2022-03-29 | 16:01:31 | 2022-03-29 16:01:31 |
++------------+----------+---------------------+
+9 rows in set (0.00 sec)
+
+mysql> create table clg(roll int primary key,name varchar(10),branch varchar(10));
+Query OK, 0 rows affected (0.52 sec)
+
+mysql> create table hostel(rollno int,room int,room_type varchar(10),foreigen key(rollno) references clg(roll));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(rollno) references clg(roll))' at line 1
+mysql> create table hostel(rollno int,room int,room_type varchar(10),foreign key(rollno) references clg(roll));
+Query OK, 0 rows affected (0.46 sec)
+
+mysql> insert into clg values(1,'a','cs');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into clg values(2,'b','cs');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into clg values(3,'c','ec');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from clg;
++------+------+--------+
+| roll | name | branch |
++------+------+--------+
+|    1 | a    | cs     |
+|    2 | b    | cs     |
+|    3 | c    | ec     |
++------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql> insert into hostel values(2,101,'single');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into hostel values(5,102,'single');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`3to430`.`hostel`, CONSTRAINT `hostel_ibfk_1` FOREIGN KEY (`rollno`) REFERENCES `clg` (`roll`))
+mysql> select * from hostel;
++--------+------+-----------+
+| rollno | room | room_type |
++--------+------+-----------+
+|      2 |  101 | single    |
++--------+------+-----------+
+1 row in set (0.02 sec)
+
+mysql> drop table hostel;
+Query OK, 0 rows affected (0.78 sec)
+
+mysql> select * from hostel;
+ERROR 1146 (42S02): Table '3to430.hostel' doesn't exist
+mysql> select * from emps; -- it will give you all colums with all records
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   103 | pant    |  50000 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   207 | dhoni   |  95000 |
+|   208 | sachin  |  60000 |
+|   209 | ganguli |  50000 |
+|   500 | rahul   |  50000 |
+|   501 | rahul   |  50000 |
+|   502 | rahul   |  20000 |
+|   503 | ajay    |  25000 |
+|   504 | vijay   |  30000 |
++-------+---------+--------+
+13 rows in set (0.01 sec)
+
+mysql> select * from /*kjsjdfjksdf kjfskf */ emps;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   103 | pant    |  50000 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   207 | dhoni   |  95000 |
+|   208 | sachin  |  60000 |
+|   209 | ganguli |  50000 |
+|   500 | rahul   |  50000 |
+|   501 | rahul   |  50000 |
+|   502 | rahul   |  20000 |
+|   503 | ajay    |  25000 |
+|   504 | vijay   |  30000 |
++-------+---------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from /* kjsjdfjksdf kjfskf */ emps;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   103 | pant    |  50000 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   207 | dhoni   |  95000 |
+|   208 | sachin  |  60000 |
+|   209 | ganguli |  50000 |
+|   500 | rahul   |  50000 |
+|   501 | rahul   |  50000 |
+|   502 | rahul   |  20000 |
+|   503 | ajay    |  25000 |
+|   504 | vijay   |  30000 |
++-------+---------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from emps order by empsal desc;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   207 | dhoni   |  95000 |
+|   101 | virat   |  66000 |
+|   208 | sachin  |  60000 |
+|   103 | pant    |  50000 |
+|   209 | ganguli |  50000 |
+|   500 | rahul   |  50000 |
+|   501 | rahul   |  50000 |
+|   504 | vijay   |  30000 |
+|   104 | chintu  |  29700 |
+|   102 | monu    |  27500 |
+|   503 | ajay    |  25000 |
+|   105 | sonu    |  22000 |
+|   502 | rahul   |  20000 |
++-------+---------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from emps order by empsal desc limit 1;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   207 | dhoni   |  95000 |
++-------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from emps where empsal=95000;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   207 | dhoni   |  95000 |
++-------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> select max(empsal) from emps;
++-------------+
+| max(empsal) |
++-------------+
+|       95000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select * from emps where empsal=max(empsal);
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select * from emps where empsal=(select max(empsal) from emps);
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   207 | dhoni   |  95000 |
++-------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> insert into emps(1001,'aa',200000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1001,'aa',200000)' at line 1
+mysql> insert into emps values(1001,'aa',200000);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> select * from emps where empsal=(select max(empsal) from emps);
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|  1001 | aa      | 200000 |
++-------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from emps;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   103 | pant    |  50000 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   207 | dhoni   |  95000 |
+|   208 | sachin  |  60000 |
+|   209 | ganguli |  50000 |
+|   500 | rahul   |  50000 |
+|   501 | rahul   |  50000 |
+|   502 | rahul   |  20000 |
+|   503 | ajay    |  25000 |
+|   504 | vijay   |  30000 |
+|  1001 | aa      | 200000 |
++-------+---------+--------+
+14 rows in set (0.00 sec)
+
+mysql> create table emp_details(adr varchar(10),mob int,age int,eid int);
+Query OK, 0 rows affected (0.42 sec)
+
+mysql> insert into emp_details('noida',123,25,101);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''noida',123,25,101)' at line 1
+mysql> insert into emp_details values('noida',123,25,101);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into emp_details values('noida',124,25,102);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into emp_details values('delhi',224,28,207);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into emp_details values('delhi',424,28,208);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into emp_details values('gurugram',224,28,601);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into emp_details values('gurugram',254,20,602);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> select * from emp_details;
++----------+------+------+------+
+| adr      | mob  | age  | eid  |
++----------+------+------+------+
+| noida    |  123 |   25 |  101 |
+| noida    |  124 |   25 |  102 |
+| delhi    |  224 |   28 |  207 |
+| delhi    |  424 |   28 |  208 |
+| gurugram |  224 |   28 |  601 |
+| gurugram |  254 |   20 |  602 |
++----------+------+------+------+
+6 rows in set (0.00 sec)
+
+mysql> select * from emps inner join emp_details on emps.empid=emp_details.eid;
++-------+---------+--------+-------+------+------+------+
+| empid | empname | empsal | adr   | mob  | age  | eid  |
++-------+---------+--------+-------+------+------+------+
+|   101 | virat   |  66000 | noida |  123 |   25 |  101 |
+|   102 | monu    |  27500 | noida |  124 |   25 |  102 |
+|   207 | dhoni   |  95000 | delhi |  224 |   28 |  207 |
+|   208 | sachin  |  60000 | delhi |  424 |   28 |  208 |
++-------+---------+--------+-------+------+------+------+
+4 rows in set (0.02 sec)
+
+mysql> select emps.empid,emps.empname,emps.sal,emp_details.age,emp_details.mob,emp_details.adr from emps inner join emp_details on emps.empid=emp_details.eid;
+ERROR 1054 (42S22): Unknown column 'emps.sal' in 'field list'
+mysql> select emps.empid,emps.empname,emps.empsal,emp_details.age,emp_details.mob,emp_details.adr from emps inner join emp_details on emps.empid=emp_details.eid;
++-------+---------+--------+------+------+-------+
+| empid | empname | empsal | age  | mob  | adr   |
++-------+---------+--------+------+------+-------+
+|   101 | virat   |  66000 |   25 |  123 | noida |
+|   102 | monu    |  27500 |   25 |  124 | noida |
+|   207 | dhoni   |  95000 |   28 |  224 | delhi |
+|   208 | sachin  |  60000 |   28 |  424 | delhi |
++-------+---------+--------+------+------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select e.empid,e.empname,e.empsal,ed.age,ed.mob,ed.adr from emps as e inner join emp_details as ed  on e.empid=ed.eid;
++-------+---------+--------+------+------+-------+
+| empid | empname | empsal | age  | mob  | adr   |
++-------+---------+--------+------+------+-------+
+|   101 | virat   |  66000 |   25 |  123 | noida |
+|   102 | monu    |  27500 |   25 |  124 | noida |
+|   207 | dhoni   |  95000 |   28 |  224 | delhi |
+|   208 | sachin  |  60000 |   28 |  424 | delhi |
++-------+---------+--------+------+------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select e.empid,e.empname,e.empsal,ed.age,ed.mob,ed.adr from emps as e left join emp_details as ed  on e.empid=ed.eid;
++-------+---------+--------+------+------+-------+
+| empid | empname | empsal | age  | mob  | adr   |
++-------+---------+--------+------+------+-------+
+|   101 | virat   |  66000 |   25 |  123 | noida |
+|   102 | monu    |  27500 |   25 |  124 | noida |
+|   103 | pant    |  50000 | NULL | NULL | NULL  |
+|   104 | chintu  |  29700 | NULL | NULL | NULL  |
+|   105 | sonu    |  22000 | NULL | NULL | NULL  |
+|   207 | dhoni   |  95000 |   28 |  224 | delhi |
+|   208 | sachin  |  60000 |   28 |  424 | delhi |
+|   209 | ganguli |  50000 | NULL | NULL | NULL  |
+|   500 | rahul   |  50000 | NULL | NULL | NULL  |
+|   501 | rahul   |  50000 | NULL | NULL | NULL  |
+|   502 | rahul   |  20000 | NULL | NULL | NULL  |
+|   503 | ajay    |  25000 | NULL | NULL | NULL  |
+|   504 | vijay   |  30000 | NULL | NULL | NULL  |
+|  1001 | aa      | 200000 | NULL | NULL | NULL  |
++-------+---------+--------+------+------+-------+
+14 rows in set (0.00 sec)
+
+mysql> select e.empid,e.empname,e.empsal,ed.age,ed.mob,ed.adr from emps as e right join emp_details as ed  on e.empid=ed.eid;
++-------+---------+--------+------+------+----------+
+| empid | empname | empsal | age  | mob  | adr      |
++-------+---------+--------+------+------+----------+
+|   101 | virat   |  66000 |   25 |  123 | noida    |
+|   102 | monu    |  27500 |   25 |  124 | noida    |
+|   207 | dhoni   |  95000 |   28 |  224 | delhi    |
+|   208 | sachin  |  60000 |   28 |  424 | delhi    |
+|  NULL | NULL    |   NULL |   28 |  224 | gurugram |
+|  NULL | NULL    |   NULL |   20 |  254 | gurugram |
++-------+---------+--------+------+------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select e.empid,e.empname,e.empsal,ed.age,ed.mob,ed.adr from emps as e full join emp_details as ed  on e.empid=ed.eid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'full join emp_details as ed  on e.empid=ed.eid' at line 1
+mysql> select e.empid,e.empname,e.empsal,ed.age,ed.mob,ed.adr from emps as e left join emp_details as ed  on e.empid=ed.eid  union  select e.empid,e.empname,e.empsal,ed.age,ed.mob,ed.adr from emps as e right join emp_details as ed  on e.empid=ed.eid;
++-------+---------+--------+------+------+----------+
+| empid | empname | empsal | age  | mob  | adr      |
++-------+---------+--------+------+------+----------+
+|   101 | virat   |  66000 |   25 |  123 | noida    |
+|   102 | monu    |  27500 |   25 |  124 | noida    |
+|   103 | pant    |  50000 | NULL | NULL | NULL     |
+|   104 | chintu  |  29700 | NULL | NULL | NULL     |
+|   105 | sonu    |  22000 | NULL | NULL | NULL     |
+|   207 | dhoni   |  95000 |   28 |  224 | delhi    |
+|   208 | sachin  |  60000 |   28 |  424 | delhi    |
+|   209 | ganguli |  50000 | NULL | NULL | NULL     |
+|   500 | rahul   |  50000 | NULL | NULL | NULL     |
+|   501 | rahul   |  50000 | NULL | NULL | NULL     |
+|   502 | rahul   |  20000 | NULL | NULL | NULL     |
+|   503 | ajay    |  25000 | NULL | NULL | NULL     |
+|   504 | vijay   |  30000 | NULL | NULL | NULL     |
+|  1001 | aa      | 200000 | NULL | NULL | NULL     |
+|  NULL | NULL    |   NULL |   28 |  224 | gurugram |
+|  NULL | NULL    |   NULL |   20 |  254 | gurugram |
++-------+---------+--------+------+------+----------+
+16 rows in set (0.00 sec)
+
+mysql> select * from emps;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   103 | pant    |  50000 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   207 | dhoni   |  95000 |
+|   208 | sachin  |  60000 |
+|   209 | ganguli |  50000 |
+|   500 | rahul   |  50000 |
+|   501 | rahul   |  50000 |
+|   502 | rahul   |  20000 |
+|   503 | ajay    |  25000 |
+|   504 | vijay   |  30000 |
+|  1001 | aa      | 200000 |
++-------+---------+--------+
+14 rows in set (0.00 sec)
+
+mysql> select * from emps where empsal>=50000;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   103 | pant    |  50000 |
+|   207 | dhoni   |  95000 |
+|   208 | sachin  |  60000 |
+|   209 | ganguli |  50000 |
+|   500 | rahul   |  50000 |
+|   501 | rahul   |  50000 |
+|  1001 | aa      | 200000 |
++-------+---------+--------+
+8 rows in set (0.00 sec)
+
+mysql> create view above_50k_emp as select * from emps where empsal>50000;
+Query OK, 0 rows affected (0.16 sec)
+
+mysql> select * from above_50k_emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   207 | dhoni   |  95000 |
+|   208 | sachin  |  60000 |
+|  1001 | aa      | 200000 |
++-------+---------+--------+
+4 rows in set (0.02 sec)
+
+mysql> update emps set empsal=70000 where empid=208;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from emps;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  27500 |
+|   103 | pant    |  50000 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   207 | dhoni   |  95000 |
+|   208 | sachin  |  70000 |
+|   209 | ganguli |  50000 |
+|   500 | rahul   |  50000 |
+|   501 | rahul   |  50000 |
+|   502 | rahul   |  20000 |
+|   503 | ajay    |  25000 |
+|   504 | vijay   |  30000 |
+|  1001 | aa      | 200000 |
++-------+---------+--------+
+14 rows in set (0.00 sec)
+
+mysql> select * from above_50k_emp;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   207 | dhoni   |  95000 |
+|   208 | sachin  |  70000 |
+|  1001 | aa      | 200000 |
++-------+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select empname from above_50k_emp;
++---------+
+| empname |
++---------+
+| virat   |
+| dhoni   |
+| sachin  |
+| aa      |
++---------+
+4 rows in set (0.00 sec)
+
+mysql> create table myemps as select * from emps where empsal<50000;
+Query OK, 6 rows affected (0.62 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from myemps;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   502 | rahul   |  20000 |
+|   503 | ajay    |  25000 |
+|   504 | vijay   |  30000 |
++-------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> update emps set empsal=10000 where empid=502;
+ERROR 3819 (HY000): Check constraint 'emps_chk_1' is violated.
+mysql> update emps set empsal=25000 where empid=102;
+Query OK, 1 row affected (0.08 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from emps;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   101 | virat   |  66000 |
+|   102 | monu    |  25000 |
+|   103 | pant    |  50000 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   207 | dhoni   |  95000 |
+|   208 | sachin  |  70000 |
+|   209 | ganguli |  50000 |
+|   500 | rahul   |  50000 |
+|   501 | rahul   |  50000 |
+|   502 | rahul   |  20000 |
+|   503 | ajay    |  25000 |
+|   504 | vijay   |  30000 |
+|  1001 | aa      | 200000 |
++-------+---------+--------+
+14 rows in set (0.02 sec)
+
+mysql> select * from myemps;
++-------+---------+--------+
+| empid | empname | empsal |
++-------+---------+--------+
+|   102 | monu    |  27500 |
+|   104 | chintu  |  29700 |
+|   105 | sonu    |  22000 |
+|   502 | rahul   |  20000 |
+|   503 | ajay    |  25000 |
+|   504 | vijay   |  30000 |
++-------+---------+--------+
+6 rows in set (0.02 sec)
+
+mysql> create table emp2(empids int primary key,empnames varchar(10),empsals float);
+Query OK, 0 rows affected (1.09 sec)
+
+mysql> select * from emp2;
+Empty set (0.03 sec)
+
+mysql> insert into emp2 values as select * from emps;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as select * from emps' at line 1
+mysql> insert into emp2 values as select empid,empname,empsal from emps;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as select empid,empname,empsal from emps' at line 1
+mysql> insert into emp2 select * from emps;
+Query OK, 14 rows affected (0.07 sec)
+Records: 14  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp2;
++--------+----------+---------+
+| empids | empnames | empsals |
++--------+----------+---------+
+|    101 | virat    |   66000 |
+|    102 | monu     |   25000 |
+|    103 | pant     |   50000 |
+|    104 | chintu   |   29700 |
+|    105 | sonu     |   22000 |
+|    207 | dhoni    |   95000 |
+|    208 | sachin   |   70000 |
+|    209 | ganguli  |   50000 |
+|    500 | rahul    |   50000 |
+|    501 | rahul    |   50000 |
+|    502 | rahul    |   20000 |
+|    503 | ajay     |   25000 |
+|    504 | vijay    |   30000 |
+|   1001 | aa       |  200000 |
++--------+----------+---------+
+14 rows in set (0.00 sec)
+
+mysql>
+
+
